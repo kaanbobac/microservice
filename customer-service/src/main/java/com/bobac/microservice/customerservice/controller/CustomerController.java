@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bobac.microservice.customerservice.model.Customer;
+import com.bobac.microservice.customerservice.model.CustomerOrder;
 import com.bobac.microservice.customerservice.service.CustomerService;
 
 @RestController
@@ -42,5 +43,9 @@ public class CustomerController {
 	@GetMapping("/customer/{id}")
 	public ResponseEntity<Customer> queryOneCustomer(@PathVariable Long id) {
 		return new ResponseEntity<Customer>(customerService.queryOneCustomer(id), HttpStatus.OK);
+	}
+	@GetMapping("/customer/{id}/order")
+	public ResponseEntity<CustomerOrder> queryCustomerOrder(@PathVariable Long id){
+		return new ResponseEntity<CustomerOrder>(customerService.queryCustomerOrder(id), HttpStatus.OK);
 	}
 }
