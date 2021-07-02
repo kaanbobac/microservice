@@ -15,5 +15,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private Long customerId;
 	private String description;
+	private String status;
 }

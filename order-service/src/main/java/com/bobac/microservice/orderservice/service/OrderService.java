@@ -26,4 +26,7 @@ public class OrderService {
 	public void saveOrder(Order o){
 		repo.save(o);
 	}
+	public List<Order> queryCustomerOrder(Long id){
+		return repo.findByCustomerId(id);
+	}
 }
