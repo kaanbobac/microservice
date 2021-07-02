@@ -10,7 +10,8 @@ import com.bobac.microservice.customerservice.repo.CustomerRepository;
 
 @Service
 public class CustomerService {
-
+	@Autowired
+	private ServiceUtil util;
 	@Autowired
 	private CustomerRepository repo;
 	public List<Customer> queryAll(){
@@ -25,5 +26,10 @@ public class CustomerService {
 	}
 	public void deleteCustomer(Long id) {
 		repo.deleteById(id);
+	}
+	public Customer queryOneCustomer(Long id) {
+		Customer customer =  repo.findById(id).orElse(new Customer());
+		customer.setEnvironment(String.valueOf(util.getServiceAddress()));
+		return customer;
 	}
 }
