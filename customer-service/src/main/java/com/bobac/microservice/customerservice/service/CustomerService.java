@@ -1,13 +1,17 @@
 package com.bobac.microservice.customerservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.bobac.microservice.customerservice.exception.CustomerOrderNotFoundException;
 import com.bobac.microservice.customerservice.exception.UserNotFoundException;
 import com.bobac.microservice.customerservice.model.Customer;
 import com.bobac.microservice.customerservice.model.CustomerOrder;
@@ -53,7 +57,14 @@ public class CustomerService {
 		queryCustomerDb(customerId);
 		RestTemplate restTemplate = new RestTemplate();
 		String url ="http://localhost:8000//order/customer/" + customerId;
-		List <Order> orders = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Order>>() {}).getBody();
+		List <Order> orders = new ArrayList<Order>();
+		try {
+			orders = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Order>>() {}).getBody();
+		}
+		catch(final HttpClientErrorException e) {
+			if(e.getStatusCode() == HttpStatus.NOT_FOUND)
+				throw new CustomerOrderNotFoundException(e.getMessage());
+		}
 		return orders;
 	}
 	private Customer queryCustomerDb(Long id) {
