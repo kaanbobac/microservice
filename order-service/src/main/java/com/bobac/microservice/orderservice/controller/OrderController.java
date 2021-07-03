@@ -38,7 +38,7 @@ public class OrderController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	@GetMapping("/order/customer/{id}")
-	public ResponseEntity<List<Order>> queryOCustomerOrder(@PathVariable Long id){
+	public ResponseEntity<List<Order>> queryCustomerOrder(@PathVariable Long id){
 		return new ResponseEntity<List<Order>>(orderService.queryCustomerOrder(id),HttpStatus.OK);
 	}
 }
