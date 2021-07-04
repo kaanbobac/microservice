@@ -67,7 +67,7 @@ public class CustomerService {
 		}
 		return orders;
 	}
-	private Customer queryCustomerDb(Long id) {
+	public Customer queryCustomerDb(Long id) {
 		return repo.findById(id).orElseThrow(
 				() -> new UserNotFoundException("Customer: " + id + " is not found"));
 		
