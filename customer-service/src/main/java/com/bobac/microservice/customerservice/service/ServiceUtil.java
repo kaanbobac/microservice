@@ -3,14 +3,13 @@ package com.bobac.microservice.customerservice.service;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ServiceUtil {
 
-	@Value("${server.port}")
-	private int port;
+	
+	private String port = "9000";
 	public String getServiceAddress() {
         return findMyHostname() + "/" + findMyIpAddress() + ":" + port;
     }
