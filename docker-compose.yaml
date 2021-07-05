@@ -1,0 +1,18 @@
+version: '2.1'
+
+services:
+  customer:
+    build: customer-service
+    mem_limit: 350m
+    ports:
+      - "9000:9000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  order:
+    build: order-service
+    mem_limit: 350m
+    ports:
+      - "8000:8000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
