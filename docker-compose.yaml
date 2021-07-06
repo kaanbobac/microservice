@@ -4,8 +4,6 @@ services:
   customer:
     build: customer-service
     mem_limit: 350m
-    ports:
-      - "9000:9000"
     depends_on:
       - db-customer  
     environment:
@@ -17,8 +15,6 @@ services:
   order:
     build: order-service
     mem_limit: 350m
-    ports:
-      - "8000:8000"
     depends_on:
       - db-order
     environment:
@@ -26,6 +22,11 @@ services:
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=123
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  eureka:
+    build: eureka-server
+    mem_limit: 350m
+    ports:
+      - "8761:8761"    
   db-customer:
     image: 'postgres:13.1-alpine'
     container_name: db-customer
