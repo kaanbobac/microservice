@@ -6,13 +6,37 @@ services:
     mem_limit: 350m
     ports:
       - "9000:9000"
+    depends_on:
+      - db-customer  
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-customer:5432/customer
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   order:
     build: order-service
     mem_limit: 350m
     ports:
       - "8000:8000"
+    depends_on:
+      - db-order
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-order:5432/order
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db-customer:
+    image: 'postgres:13.1-alpine'
+    container_name: db-customer
+    environment:
+      - POSTGRES_DB=customer
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123
+  db-order:
+    image: 'postgres:13.1-alpine'
+    container_name: db-order
+    environment:
+      - POSTGRES_DB=order
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123       
