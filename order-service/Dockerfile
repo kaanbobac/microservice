@@ -1,9 +1,16 @@
-FROM openjdk:12.0.2
-
+FROM openjdk:8-jdk-alpine as build
+#build steps
+WORKDIR /workspace/app
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
+RUN ./mvnw install -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+#Run steps
+FROM openjdk:8-jdk-alpine
 EXPOSE 8000
-
 VOLUME /tmp
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} order-service.jar
-
+ARG JAR_FILE=/workspace/app/target/*.jar
+COPY --from=build ${JAR_FILE} order-service.jar
 ENTRYPOINT ["java","-jar","/order-service.jar"]
