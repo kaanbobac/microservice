@@ -11,6 +11,4 @@ eureka:
     registryFetchIntervalSeconds: 5
     instance:
     leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 5
-  instance:
-    instanceId: ${spring.application.name}    
+    leaseExpirationDurationInSeconds: 5 
