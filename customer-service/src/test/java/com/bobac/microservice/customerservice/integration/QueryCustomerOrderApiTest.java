@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.bobac.microservice.customerservice.model.Customer;
 import com.bobac.microservice.customerservice.model.Order;
 import com.bobac.microservice.customerservice.service.CustomerService;
-@SpringBootTest
+@SpringBootTest(properties = {"eureka.client.enabled=false"})
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 public class QueryCustomerOrderApiTest {
