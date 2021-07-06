@@ -56,8 +56,8 @@ public class CustomerService {
 	public List<Order> callOrderService(Long customerId){
 		queryCustomerDb(customerId);
 		RestTemplate restTemplate = new RestTemplate();
-		String url ="http://localhost:8000//order/customer/" + customerId;
-		List <Order> orders = new ArrayList<Order>();
+		String url ="http://order:8000/order/customer/" + customerId;
+		List<Order> orders = new ArrayList<Order>();
 		try {
 			orders = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Order>>() {}).getBody();
 		}
