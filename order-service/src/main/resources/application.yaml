@@ -1,2 +1,16 @@
 server:
   port: 8000
+spring:
+  application:
+    name: order-service  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+    instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+  instance:
+    instanceId: ${spring.application.name}    
