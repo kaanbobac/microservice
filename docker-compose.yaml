@@ -4,6 +4,8 @@ services:
   customer:
     build: customer-service
     mem_limit: 350m
+    ports:
+      - "9000"
     depends_on:
       - db-customer  
     environment:
@@ -15,6 +17,8 @@ services:
   order:
     build: order-service
     mem_limit: 350m
+    ports:
+      - "8000"
     depends_on:
       - db-order
     environment:
