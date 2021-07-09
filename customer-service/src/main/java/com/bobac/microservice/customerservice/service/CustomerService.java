@@ -21,6 +21,8 @@ import com.bobac.microservice.customerservice.repo.CustomerRepository;
 @Service
 public class CustomerService {
 	@Autowired
+	private OrderServiceProxy proxy;
+	@Autowired
 	private ServiceUtil util;
 	@Autowired
 	private CustomerRepository repo;
@@ -50,7 +52,7 @@ public class CustomerService {
 		customerOrder.setEnvironment(util.getServiceAddress());
 		customerOrder.setId(customerId);
 		customerOrder.setName(customer.getName());
-		customerOrder.setOrders(callOrderService(customerId));
+		customerOrder.setOrders(callOrderFeign(customerId));
 		return customerOrder;
 	}
 	public List<Order> callOrderService(Long customerId){
@@ -67,9 +69,13 @@ public class CustomerService {
 		}
 		return orders;
 	}
+	public List<Order> callOrderFeign(Long customerId){
+		queryCustomerDb(customerId);
+		return proxy.queryCustomerOrder(customerId);
+	}
 	public Customer queryCustomerDb(Long id) {
 		return repo.findById(id).orElseThrow(
-				() -> new UserNotFoundException("Customer: " + id + " is not found"));
+				() -> new UserNotFoundException("Customer: " + id + " is not found!"));
 		
 	}
 }
